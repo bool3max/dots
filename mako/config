@@ -1,0 +1,7 @@
+font=Iosevka Term 10
+background-color=#191919
+text-color=#d6d6d6
+border-color=#d6d6d6
+
+max-visible=3
+default-timeout=15000
