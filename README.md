@@ -14,3 +14,7 @@ The color situation in the shell (*fish*) is a little weird.
 My fish prompt uses ANSI 4bit color codes. 
 
 Colors in sway and swaybar are also based off of Spacegray.vim.
+
+--- 
+
+Many of these configs reference external scripts that aren't a part of this repo. If you plan on using any of the dotfiles, remove those references. 
