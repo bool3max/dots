@@ -9,6 +9,12 @@ colorscheme spacegray
 set number
 set relativenumber
 
+" goyo vars
+let g:goyo_width=110
+
+" vim-smoothie vars
+let g:smoothie_update_interval = 5
+
 " enable mouse controls (useful for scrolling)
 set mouse=a
 

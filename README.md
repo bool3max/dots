@@ -15,6 +15,10 @@ My fish prompt uses ANSI 4bit color codes.
 
 Colors in sway and swaybar are also based off of Spacegray.vim.
 
+# Icons
+
+Some of the config files reference FontAwesome icons, so you might see squares instead of icons if you don't have that particular font available.
+
 --- 
 
 Many of these configs reference external scripts that aren't a part of this repo. If you plan on using any of the dotfiles, remove those references. 

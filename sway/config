@@ -5,6 +5,15 @@ input "1112:58:Genius_USB_Optical_Mouse" {
     pointer_accel '-0.35'
 }
 
+input type:keyboard {
+    xkb_layout us,rs(latinunicode)
+    xkb_options grp:win_space_toggle
+}
+
+input * {
+    repeat_delay 200
+}
+
 # Default modifier key
 set $mod Mod4
 set $alt Mod1
@@ -12,13 +21,16 @@ set $alt Mod1
 # notification daemon
 exec mako
 
+# screen lock
+bindsym $mod+$alt+l exec swaylock -ef
+
 # wallpapers
 exec_always --no-startup-id wallscript -s
 bindsym $mod+$alt+p exec --no-startup-id wallscript -t
 
 # screenshots with grim and slurp
-bindsym $mod+Shift+F9 exec --no-startup-id grim -g "$(slurp -d)" /media/Ext1TB/screens/$(date \'+%d-%m-%Y--%R:%S\').png
-bindsym $mod+Shift+F10 exec --no-startup-id grim -g "$(slurp -d)" - | tee /media/Ext1TB/screens/$(date \'+%d-%m-%Y--%R:%S\').png | wl-copy -t image/png
+bindsym $mod+Shift+F9 exec --no-startup-id fname=$(date '+%d-%m-%Y--%R:%S') && grim -g "$(slurp -d)" "/media/Ext1TB/screenies/swaywm/$fname.png"
+bindsym $mod+Shift+F10 exec --no-startup-id grim -g "$(slurp -d)" - | tee /media/Ext1TB/screenies/swaywm/$(date \'+%d-%m-%Y--%R:%S\').png | wl-copy -t image/png
 
 # start kitty
 bindsym $mod+Return exec --no-startup-id kitty
@@ -26,24 +38,24 @@ bindsym $mod+Return exec --no-startup-id kitty
 # start bemenu (a program launcher)
 bindsym $mod+d exec --no-startup-id dfdmenu # my custom .desktop file script
 
-#master volume controls via amixer
+# master volume controls via amixer
 bindsym $mod+Shift+bracketleft exec amixer -D default -M set Master 5%- && pkill -SIGRTMIN+5 i3blocks
 bindsym $mod+Shift+bracketright exec amixer -D default -M set Master 5%+ && pkill -SIGRTMIN+5 i3blocks
 bindsym $mod+Shift+plus exec amixer -D default set -M Master toggle && pkill -SIGRTMIN+5 i3blocks
 #----------------------
 
-#bind 'sp' commands to keyboard keys (sp is an external script that utilizes the MPRIS dbus protocol to send commands to the running spotify client
-#sp is in $HOME/.scripts, which should be in $PATH
-bindsym $mod+F6 exec --no-startup-id sp play
-bindsym $mod+F5 exec --no-startup-id sp prev
-bindsym $mod+F7 exec --no-startup-id sp next
+# bind 'sp' commands to keyboard keys (sp is an external script that utilizes the MPRIS dbus protocol to send commands to the running spotify client
+# sp is in $HOME/.scripts, which should be in $PATH
+bindsym $mod+F6 exec --no-startup-id sp play && pkill -SIGRTMIN+6 i3blocks
+bindsym $mod+F5 exec --no-startup-id sp prev && pkill -SIGRTMIN+6 i3blocks
+bindsym $mod+F7 exec --no-startup-id sp next && pkill -SIGRTMIN+6 i3blocks
 #-------------------------------------------------
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Source Code Pro Medium, 9
+font pango:Iosevka Semibold 9.5
 
-#color customization
+# color customization
 
 client.focused #B7BBB7 #111314 #cccccc #FFFFFF #527C77
 client.unfocused #B7BBB7 #3a3a3a #a9ada9 #FFFFFF #222222
@@ -55,8 +67,8 @@ bindsym $mod+Shift+b border toggle
 
 #hide the borders if there's only 1 window on a workspace visible AND it has no gaps (we want the border when gaps are visible for aesthetic reasons)
 hide_edge_borders smart_no_gaps
-default_border pixel 1
-default_floating_border pixel 1
+default_border pixel 3
+default_floating_border pixel 3
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -111,7 +123,7 @@ set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
-set $ws10 ""
+set $ws10 "0"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -188,7 +200,7 @@ bindsym $mod+r mode "resize"
 
 bar {
     status_command i3blocks
-    position bottom
+    position top
 	font pango:Iosevka, bold 9 
 	colors {
 		background #191919

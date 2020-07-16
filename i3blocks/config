@@ -6,10 +6,16 @@ min_width=70
 interval=once
 signal=5
 
+[spotify_status]
+command=$HOME/.scripts/blocks/spp_statusbar
+interval=5
+signal=6
+min_width=200
+
 [ram]
 command=$HOME/.scripts/blocks/raminfo
 interval=10
-min_width=130
+min_width=90
 
 [gpurpm]
 command=$HOME/.scripts/blocks/gpustat
@@ -17,16 +23,16 @@ interval=3
 min_width=170
 
 [diskssd]
-command=echo -n " SSD: $(grep -Poi '(\/\s+)\K(.*)' <<< $(df -H --output=target,avail))B"
+command=echo " SSD: $(grep -Poi '(\/\s+)\K(.*)' <<< $(df -H --output=target,avail))B"
 interval=60
-min_width=120
+min_width=100
 
 [diskext1tb]
-command=echo -n " External1TB: $(grep -Poi '(\/media\/Ext1TB\s+)\K(.*)' <<< $(df -H --output=target,avail))B"
+command=echo " External1TB: $(grep -Poi '(\/media\/Ext1TB\s+)\K(.*)' <<< $(df -H --output=target,avail))B"
 interval=60
 min_width=160
 
 [time]
-command=echo -n " $(date +"%A, %d / %m / %Y   %R")"
+command=echo " $(date +"%A, %d / %m / %Y   %R")"
 interval=1
 min_width=250
