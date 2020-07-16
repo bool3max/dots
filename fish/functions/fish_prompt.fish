@@ -7,6 +7,8 @@ function fish_prompt --description 'Custom fish prompt'
     echo -ne "\e[93m "(string replace -i "/home/$USER" "~" $PWD)
 
     # ------------ GIT ------------
+    # NOTE: requires universal variable "MAX_PARENT_GIT_DIR_TRAVERSE" to be set to an integer that tells the script how deep to recursively look for git repo
+    # I usually use "6"
     set _start_dir '.'
     set _is_git_repo 'false'
     for n in (seq $MAX_PARENT_GIT_DIR_TRAVERSE)
