@@ -1,5 +1,7 @@
-# input configuration
+# color configuration in a separate file
+include colors
 
+# input configuration
 input "1112:58:Genius_USB_Optical_Mouse" {
     accel_profile flat
     pointer_accel '-0.35'
@@ -7,12 +9,15 @@ input "1112:58:Genius_USB_Optical_Mouse" {
 
 input type:keyboard {
     xkb_layout us,rs(latinunicode)
-    xkb_options grp:win_space_toggle
+    xkb_options grp:rctrl_toggle
 }
 
 input * {
     repeat_delay 200
 }
+
+# disable dragging windows (really annoying in tabbed/stacked layout)
+tiling_drag disable
 
 # Default modifier key
 set $mod Mod4
@@ -53,13 +58,17 @@ bindsym $mod+F7 exec --no-startup-id sp next && pkill -SIGRTMIN+6 i3blocks
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Iosevka Semibold 9.5
+font pango:Iosevka Medium 10
 
-# color customization
+# COLORS
 
-client.focused #B7BBB7 #111314 #cccccc #FFFFFF #527C77
-client.unfocused #B7BBB7 #3a3a3a #a9ada9 #FFFFFF #222222
-client.focused_inactive #B7BBB7 #2d3133 #f2f2f3 #FFFFFF #5f676a 
+# Property Name         Border  BG      Text    Indicator Child Border
+client.focused          $base05 $base0D $base00 $base0D $base0D
+client.focused_inactive $base01 $base01 $base05 $base03 $base01
+client.unfocused        $base01 $base00 $base05 $base01 $base01
+client.urgent           $base08 $base08 $base00 $base08 $base08
+client.placeholder      $base00 $base00 $base05 $base00 $base00
+client.background       $base07
 
 # border configuration
 
@@ -201,13 +210,20 @@ bindsym $mod+r mode "resize"
 bar {
     status_command i3blocks
     position top
-	font pango:Iosevka, bold 9 
-	colors {
-		background #191919
-		statusline #d6d6d6
-		focused_workspace #d6d6d6 #d6d6d6 #000000
-        inactive_workspace #191919 #191919 #d6d6d6
-	}
+	font pango:Iosevka, Regular 10
+
+    colors {
+        background $base00
+        separator  $base01
+        statusline $base04
+
+        # State             Border  BG      Text
+        focused_workspace   $base05 $base0D $base00
+        active_workspace    $base05 $base03 $base00
+        inactive_workspace  $base03 $base01 $base05
+        urgent_workspace    $base08 $base08 $base00
+        binding_mode        $base00 $base0A $base00
+    }
 
     #disable up/down scroll on bar (don't switch workspaces...) 
     bindsym button4 nop

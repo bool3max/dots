@@ -15,7 +15,7 @@ min_width=200
 [ram]
 command=$HOME/.scripts/blocks/raminfo
 interval=10
-min_width=90
+min_width=120
 
 [gpurpm]
 command=$HOME/.scripts/blocks/gpustat
@@ -35,4 +35,4 @@ min_width=160
 [time]
 command=echo " $(date +"%A, %d / %m / %Y   %R")"
 interval=1
-min_width=250
+min_width=300
