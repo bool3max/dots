@@ -5,7 +5,7 @@ set -g words_i 1
 set -g emojis 👎🏿 👍🏿
 set -g emojis_i 1
 
-set TOKEN "mfa.YKrn8izqQQ0jjGBKU5Ss89oz9GqdXhoQLUarWCJMBkkIXZm1usoWkQztPpILrerRw9H1XM5tx6rOZ6ln8Wzw"
+set TOKEN "TOKEN_HERE"
 
 while true
     curl -X PATCH "https://discordapp.com/api/v6/users/@me/settings" -H "authorization: $TOKEN" -H "Content-Type: application/json" --data "{\"custom_status\":{\"text\":\"$words[$words_i]\", \"emoji_name\": \"$emojis[$emojis_i]\"}}"

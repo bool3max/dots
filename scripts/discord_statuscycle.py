@@ -6,7 +6,7 @@ from time import sleep
 
 # TODO: get data from CLI args, including the token and the actual status and emojis
 
-ACC_TOKEN = "mfa.iVCbhzhl1fSVaiWd0T7XsGmYHO0YbOOuIAJloG_QZjWi2jweb75ZERZMKcgBYzIdLogEbT_GyRDTxjVilEQF"
+ACC_TOKEN = "TOKEN_HERE"
 STATUS_URL = "https://discordapp.com/api/v6/users/@me/settings"  
 
 DELAY_SEC = 1
