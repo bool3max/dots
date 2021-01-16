@@ -1,0 +1,10 @@
+#!/usr/bin/fish
+
+# get lyrics of the currently playing spotify song in your terminal
+# requires "sp" in PATH
+
+set full_metadata (command sp metadata)
+set artist (echo -n $full_metadata | grep -Poi '(?<=albumArtist\|)(.*)')
+set title  (echo -n $full_metadata | grep -Po '(?<=title\|)(.*)')
+
+echo -n $artist

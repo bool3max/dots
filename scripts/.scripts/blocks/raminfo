@@ -1,0 +1,3 @@
+#!/usr/bin/fish
+set avail (free -h | awk 'FNR == 2 {print $3}')
+echo "  Used: $avail" 
