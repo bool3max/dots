@@ -21,13 +21,12 @@ let g:onedark_terminal_italics=1 " enable italics in the onedark theme (only has
 " dim - essentially the default cterm colorscheme of vim with some improvements
 " (I've additionaly made some changes to it, such as adding italics and changing background highlights in a few places)
 colorscheme dim 
-let g:airline_theme='base16_atelierforest' " set airline theme to base16_atelierforest from the airline-themes repo
+let g:airline_theme='base16_atelierforest' " set airline theme to base16_atelierforest from the airline-themes repo (only effective when using airline)
 set fillchars=vert:┃ " alternate unicode character separator for vertical splits (horizontal splits are denoted by the statusline)
-set colorcolumn=140  " show a vertical line at column 120 (useful for code guidelines)
+set colorcolumn=140  " show a vertical line at column 140 (useful for code guidelines) - this has its own highlight group
 
 " number lines w/ relative numbers
-set number
-set relativenumber
+set number relativenumber
 
 " goyo configuration
 let g:goyo_width=110
@@ -41,8 +40,12 @@ set mouse=a
 
 " misc options
 let mapleader=" "
-set nowrap
-set incsearch
+set nowrap " don't wrap long lines
+set incsearch " update search highlight on every keystore
+set scrolloff=4 " begin scrolling the file when the cursor is 4 lines away from top/bottom
+                " this way your cursor is never at the very edge of the file
+                " and you always have a peek at the few lines beyond it, super
+                " useful and avoids the need for constant 'zz'-ing
 
 " tab = 4 spaces
 filetype indent plugin on
@@ -55,7 +58,7 @@ set smartindent
 set foldenable
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
-set foldlevelstart=99 " keep everything open
+set foldlevelstart=99 " keep everything open at start
 
 " natural splits and a better default preview size
 set previewheight=20
@@ -64,7 +67,7 @@ set splitright
 
 " enable nvim-treesitter-based syntax highlighting
 lua <<EOF
-require 'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup {
   highlight = {
     enable = true,
     custom_captures = {
