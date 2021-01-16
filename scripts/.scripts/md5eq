@@ -1,7 +1,0 @@
-#!/usr/bin/fish
-
-# md5eq: 
-    # Check if 2 given files are equal by comparing their MD5 checksums. 
-    # Exits with status code 0 if the files are equal, and with 1 otherwise.
-
-test (md5sum $argv[1] | cut -f1 -d' ') = (md5sum $argv[2] | cut -f1 -d' ')

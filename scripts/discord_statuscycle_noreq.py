@@ -5,7 +5,7 @@ from time import sleep
 import urllib.request as req
 import urllib.error
 
-ACC_TOKEN = "mfa.iVCbhzhl1fSVaiWd0T7XsGmYHO0YbOOuIAJloG_QZjWi2jweb75ZERZMKcgBYzIdLogEbT_GyRDTxjVilEQF"
+ACC_TOKEN = sys.argv[1]
 STATUS_URL = "https://discordapp.com/api/v6/users/@me/settings"  
 
 DELAY_SEC = 1
@@ -20,7 +20,7 @@ req_headers = {
     "Connection": "keep-alive"
 }
 
-for combo in itertools.cycle(sys.argv[1:]):
+for combo in itertools.cycle(sys.argv[2:]):
     req_data = {
         "custom_status": {
             "text": combo.split(':')[0],
