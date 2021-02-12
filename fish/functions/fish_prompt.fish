@@ -39,5 +39,5 @@ function fish_prompt --description 'Custom fish prompt'
         end
 	end
 
-	echo -e "\e[1m\e[90m\n  "
+	echo -e "\e[1m\e[90m\n "
 end

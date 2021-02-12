@@ -8,7 +8,7 @@ input "1112:58:Genius_USB_Optical_Mouse" {
 }
 
 input type:keyboard {
-    xkb_layout us,rs(latinunicode)
+    xkb_layout us,rs(latinunicode),rs
     xkb_options grp:rctrl_toggle
 }
 
@@ -58,7 +58,7 @@ bindsym $mod+F7 exec --no-startup-id sp next && pkill -SIGRTMIN+6 i3blocks
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Iosevka Medium 10
+font pango:Hack normal 9.3
 
 # COLORS
 
@@ -210,7 +210,7 @@ bindsym $mod+r mode "resize"
 bar {
     status_command i3blocks
     position top
-	font pango:Iosevka, Regular 10
+    font pango:Hack normal 9.3
 
     colors {
         background $base00

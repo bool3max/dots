@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# simple shell script that outputs the current spotify status in the form of $ARTIST - $SONGNAME, along with a FontAwesome's play/pause icons
+
+# depends on 'sp' (a shell utility for interacting with Spotify's DBUS MPRIS protocol) and gnu grep
+
+metadata_raw=$($HOME/.scripts/sp metadata)
+
+if [[ $? = 1 ]]; then
+    #sp metadata failed, presumably spotify isn't running, or some other error occurred
+    echo " Spotify not running..."
+    exit 0
+fi
+
+artist_name=$(grep -Po '(?<=albumArtist\|)(.*)' <<< "$metadata_raw")
+song_title=$(grep -Po '(?<=title\|)(.*)' <<< "$metadata_raw")
+
+play_status=$(dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:'org.mpris.MediaPlayer2.Player' string:'PlaybackStatus')
+
+final="$artist_name - $song_title"
+
+if [[ $(grep -Po 'Playing' <<< "$play_status") = 'Playing' ]]; then
+    final=" $final"
+elif [[ $(grep -Po 'Paused' <<< "$play_status") = 'Paused' ]]; then
+    final=" $final"
+fi
+
+echo $final

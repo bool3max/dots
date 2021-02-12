@@ -15,12 +15,15 @@ abbr -a venv "python3 -m venv" # virtualenv is now provided as a python3 script,
 abbr -a strings "strings -t d"
 abbr -a dirsize "du -s --si" # print current directory size in human-readable format
 abbr -a gs "git status"
+# aliases (short functions)
+alias wl-copy="wl-copy -n"
 
-# make as many clients as possible run wayland-natively
-set -x GDK_BACKEND wayland # used by firefox and (possibly) other GTK apps
-set -x QT_QPA_PLATFORM wayland-egl # used by qt5 applications
-set -x _JAVA_AWT_WM_NONREPARENTING 1 # for java apps under wayland
+# hacks to get as many apps as possible to run wayland-natively
+set -x QT_QPA_PLATFORM wayland-egl # required by qt5 applications
 set -x QT_WAYLAND_DISABLE_WINDOWDECORATION 1 # since QT draws the decorations by default with the wayland backend
+set -x MOZ_ENABLE_WAYLAND 1 # for firefox
+set -x _JAVA_AWT_WM_NONREPARENTING 1 # to fix glitches for java UI apps under xwayland
+set -x XDG_CURRENT_DESKTOP sway
 
 # toolkit themes
 set -x QT_STYLE_OVERRIDE 'kvantum'
