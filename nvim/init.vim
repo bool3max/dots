@@ -2,36 +2,40 @@
 " manage plugins via Plug
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'junegunn/goyo.vim'
+" functionality 
 Plug 'psliwka/vim-smoothie'
+Plug 'hoob3rt/lualine.nvim'
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'kdav5758/TrueZen.nvim'
 Plug 'tpope/vim-commentary'
-Plug 'jiangmiao/auto-pairs'
+Plug 'mattn/emmet-vim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'ryanoasis/vim-devicons'
+Plug 'windwp/nvim-autopairs' 
+
+" appearance
 Plug 'jeffkreeftmeijer/vim-dim'
+Plug 'folke/tokyonight.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
 
 call plug#end()
 
 " colorscheme and appearance configuration
 syntax on
-set notermguicolors
-let g:onedark_terminal_italics=1 " enable italics in the onedark theme (only has an effect when using onedark)
-" dim - essentially the default cterm colorscheme of vim with some improvements
-" (I've additionaly made some changes to it, such as adding italics and changing background highlights in a few places)
-colorscheme dim
-let g:airline_theme='base16' " set airline theme to base16_atelierforest from the airline-themes repo
-let g:airline#extensions#tabline#enabled = 1
+set termguicolors
+
+" colorscheme-specific configuration
+let g:tokyonight_style="night" " alternate style of the tokyonight colorscheme (only has an effect when using tokyonight)
+let g:tokyonight_italic_functions=1
+colorscheme tokyonight
+
 set fillchars=vert:┃ " alternate unicode character separator for vertical splits (horizontal splits are denoted by the statusline)
-set colorcolumn=140  " show a vertical line at column 140 (useful for code guidelines) - this has its own highlight group
+" set colorcolumn=140
+
+" indent-blankline configuration
+let g:indent_blankline_char="│"
 
 " number lines w/ relative numbers
 set number relativenumber
-
-" goyo configuration
-let g:goyo_width=140
-let g:goyo_linenr=1
 
 " vim-smoothie vars
 let g:smoothie_update_interval = 10
@@ -76,9 +80,13 @@ nnoremap <C-j> :wincmd j<CR>
 nnoremap <C-k> :wincmd k<CR>
 nnoremap <C-l> :wincmd l<CR>
 
-nnoremap <Leader>f :FZF<CR>
+" navigate between tabs with Alt+HL
+nnoremap <M-l> :tabnext<CR>
+nnoremap <M-h> :tabprev<CR>
 
-" enable nvim-treesitter-based syntax highlighting
+nnoremap <leader><C-f> :FZF<CR>
+let g:user_emmet_leader_key='<C-z>'
+
 lua <<EOF
 
 require('nvim-treesitter.configs').setup {
@@ -90,9 +98,17 @@ require('nvim-treesitter.configs').setup {
     },
   },
   indent = {
-    enable = true,
-    disable = {"python"}
+    -- the indentation aspect of nvim-treesitteer still sucks major cock
+    enable = true
   }
 }
+
+require('lualine').setup{
+    options = {
+        theme = 'tokyonight'
+    }
+}
+
+require('nvim-autopairs').setup()
 
 EOF

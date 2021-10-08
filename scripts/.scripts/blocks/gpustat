@@ -7,5 +7,5 @@ set -g temp (jq '.["amdgpu-pci-0100"].edge.temp1_input' (sensors -j | psub))
 if test $status -ne 0
     echo " ERROR"
 else
-    echo " RX 580: $temp°C, $rpm RPM"
+    echo " GPU: $temp°C, $rpm RPM"
 end
