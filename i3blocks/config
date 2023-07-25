@@ -8,23 +8,28 @@ signal=5
 
 [spotify_status]
 command=$HOME/.scripts/blocks/spp_statusbar
-interval=10
+interval=5
 signal=6
 min_width=200
 
+[lastfm_current_daily_track_count]
+interval=7200
+min_width=160
+command=echo " Tracks today: "$(python3 ~/dev/lastfm_today_track_count.py)
+
 [ram]
 command=$HOME/.scripts/blocks/raminfo
-interval=10
+interval=15
 min_width=120
 
 [diskssd]
 command=echo " SSD: $(grep -Poi '(\/\s+)\K(.*)' <<< $(df -H --output=target,avail))B"
-interval=60
+interval=180
 min_width=100
 
 [diskext1tb]
 command=echo " External1TB: $(grep -Poi '(\/media\/Ext1TB\s+)\K(.*)' <<< $(df -H --output=target,avail))B"
-interval=60
+interval=180
 min_width=160
 
 [keyboard_layout]

@@ -1,5 +1,6 @@
 # vi mode
 set -g fish_key_bindings fish_vi_key_bindings
+set -g fish_cursor_insert "line" # default cursor is "block", however in insert mode I want it to be a line
 
 # abbreviations
 abbr -a p "sudo pacman"
@@ -12,13 +13,11 @@ abbr -a md "mkdir -p" # mkdir but also create all missing dirs in the chain
 abbr -a p3 "python3"
 abbr -a venv "python3 -m venv" # virtualenv is now provided as a python3 script, this command runs an interpreter and searched sys.path for it and executes another interpreter to run it
 # aliases (short functions)
-alias ll="ls -l"
-alias wl-copy="wl-copy -n"
+alias wlc="wl-copy -n"
 
 # hacks to get as many apps as possible to run wayland-natively
 set -x QT_QPA_PLATFORM wayland-egl # required by qt5 applications
-set -x QT_WAYLAND_DISABLE_WINDOWDECORATION 1 # since QT draws the decorations by default with the wayland backend
-set -x MOZ_ENABLE_WAYLAND 1 # for firefox
+set -x MOZ_ENABLE_WAYLAND 1
 set -x _JAVA_AWT_WM_NONREPARENTING 1 # to fix glitches for java UI apps under xwayland
 set -x XDG_SESSION_TYPE wayland
 set -x XDG_CURRENT_DESKTOP sway
@@ -27,9 +26,10 @@ set -x XDG_CURRENT_DESKTOP sway
 set -x BOTE_PDF_CMDLINE 'zathura %f'
 set -x BOTE_EDITOR_CMDLINE 'nvim -c Goyo %f'
 
-set -x QT_STYLE_OVERRIDE 'lightly'
+set -x CHROME_EXECUTABLE chromium
 
 # more env vars
 set -x EDITOR "nvim"
 
+# tokyonight_night colorscheme (using absolute RGB (24bit) colors which fish outputs, not terminal colors)
 source ~/.config/fish/fish_tokyonight_night.fish

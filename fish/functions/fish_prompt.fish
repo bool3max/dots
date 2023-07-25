@@ -1,9 +1,10 @@
 # Defined in /tmp/fish.rp3mPC/fish_prompt.fish @ line 2
 function fish_prompt --description 'Custom fish prompt'
-	echo -ne "\e[1m\e[34m$USER"
+    #username
+    echo -ne "\e[1m\e[34m$USER"
     #"in"
     echo -ne "\e[95m in"
-    #current directory
+    #current directory - if in home replace it with "~"
     echo -ne "\e[93m "(string replace -i "/home/$USER" "~" $PWD)
 
     # ------------ GIT ------------
@@ -28,16 +29,17 @@ function fish_prompt --description 'Custom fish prompt'
     # ------------ GIT ------------
 
 
-	if set -Uq pss
+    # spotify - current playing song
+    if set -Uq pss
         # requires 'sp' in PATH
-	    set -l IFS ''
+        set -l IFS ''
         set -l spotify_active 'false'
         set -l sptmtd (command sp metadata); and set -l spotify_active 'true'; and set -l artist (grep -Po '(?<=albumArtist\|)(.*)' (echo -n $sptmtd | psub)); and set -l song (grep -Po '(?<=title\|)(.*)' (echo -n $sptmtd | psub))
 
         if test $spotify_active = 'true'
-		    echo -ne "\e[95m playing \e[32m  \e[39m$artist - $song"
+            echo -ne "\e[95m playing \e[32m  \e[39m$artist - $song"
         end
-	end
+    end
 
-	echo -e "\e[1m\e[90m\n \e[0m"
+    echo -e "\e[1m\e[90m\n \e[0m"
 end

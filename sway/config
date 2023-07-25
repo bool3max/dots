@@ -13,6 +13,12 @@ input * {
     repeat_delay 200
 }
 
+for_window [app_id="^chrome-.*"] shortcuts_inhibitor disable
+for_window [title="Emulator" window_type="utility"] move scratchpad
+
+# import screensharing-related env. vars into the systemd user environment (?)
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
 # disable dragging windows (really annoying in tabbed/stacked layout)
 tiling_drag disable
 
@@ -31,6 +37,9 @@ bindsym $mod+$alt+l exec swaylock -ef -c 000000
 
 # quicklatex
 bindsym $mod+u exec quicklatex.sh
+
+# scratchpad (test)
+bindsym $mod+minus scratchpad show
 
 # wallpapers
 exec_always --no-startup-id wallscript -s
@@ -63,6 +72,10 @@ bindsym ISO_Next_Group exec pkill -SIGRTMIN+7 i3blocks
 bindsym $mod+F6 exec --no-startup-id sp play && pkill -SIGRTMIN+6 i3blocks
 bindsym $mod+F5 exec --no-startup-id sp prev && pkill -SIGRTMIN+6 i3blocks
 bindsym $mod+F7 exec --no-startup-id sp next && pkill -SIGRTMIN+6 i3blocks
+
+# open the LastFM page for the currently playing song on spotify in a new Firefox tab
+bindsym $mod+F8 exec --no-startup-id ~/.scripts/lastfm_current_track.fish
+
 #-------------------------------------------------
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -70,13 +83,20 @@ font pango:Roboto Mono, medium 9
 
 # Color configuration
 # class                 border  backgr. text    indicator child_border
-client.focused          #7aa2f7 #414868 #c0caf5 #7dcfff  #7aa2f7
-client.focused_inactive #7aa2f7 #414868 #c0caf5 #7dcfff  #545c7e
-client.unfocused        #414868 #24283b #a9b1d6 #7dcfff  #414868
-client.urgent           #e0af68 #e0af68 #1d202f #7dcfff  #e0af68
+client.focused          #c574dd #222436 #a9b8e8 #c574dd   #c574dd
+client.focused_inactive #252734 #252734 #a9b8e8 #252734   #252734
+client.unfocused        #4d4d4d #252734 #888888 #252734   #252734
+client.urgent           #2f343a #900000 #a9b8e8 #900000   #900000
+client.placeholder      #000000 #0c0c0c #a9b8e8 #000000   #0c0c0c
+client.background       #1a1b26
+
+# PREVIOUS VERSION: lighter, more blue (lightblue borders versus now's pink ones, etc...)
+# client.focused          #7aa2f7 #414868 #c0caf5 #7dcfff   #7aa2f7
+# client.focused_inactive #7aa2f7 #414868 #c0caf5 #7dcfff   #7aa2f7
+# client.unfocused        #414868 #24283b #a9b1d6 #7dcfff   #414868
+# client.urgent           #e0af68 #e0af68 #1d202f #7dcfff   #e0af68
 
 # border configuration
-
 bindsym $mod+Shift+b border toggle
 
 #hide the borders if there's only 1 window on a workspace visible AND it has no gaps (we want the border when gaps are visible for aesthetic reasons)
@@ -103,8 +123,8 @@ bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
 # split the currently focused container
-bindsym $mod+v split v
-bindsym $mod+o split h
+bindsym $mod+v split vertical
+bindsym $mod+o split horizontal
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -113,6 +133,8 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
+
+bindsym $mod+shift+c split none
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
