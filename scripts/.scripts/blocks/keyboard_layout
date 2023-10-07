@@ -1,6 +1,6 @@
 #!/usr/bin/fish
 
-set keyboard_identifier "5426:515:Razer_Razer_BlackWidow_Chroma"
+set keyboard_identifier "1008:2447:HP,_Inc_HyperX_Alloy_Origins_Core"
 # set current_layout_string (command swaymsg -t get_inputs | jq '.[] | select(.identifier=="'$keyboard_identifier'").xkb_active_layout_name')
 set current_layout_string (command swaymsg -t get_inputs | jq -r ".[] | select((.identifier==\"$keyboard_identifier\") and (.type==\"keyboard\")).xkb_active_layout_name")
 
