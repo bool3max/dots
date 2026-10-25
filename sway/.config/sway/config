@@ -1,0 +1,260 @@
+# input configuration
+input type:pointer {
+    accel_profile flat
+    pointer_accel 0.1
+}
+
+input type:keyboard {
+    xkb_layout us,rs
+    xkb_variant ,latinunicode
+    xkb_options ctrl:nocaps,grp:rctrl_toggle,custom:nolctrl
+
+    repeat_delay 200
+}
+
+output * background ~/me_wallpapers/me_1.png fill #150524
+
+output DP-1 {
+    mode 3840x2160@160.001Hz
+    adaptive_sync on
+    render_bit_depth 10
+    pos 0 0
+}
+
+output HDMI-A-1 {
+    pos 3840 0
+}
+
+for_window [title="Emulator" window_type="utility"] move scratchpad
+
+# import screensharing-related env. vars into the systemd user environment (?)
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
+# default interface font for GTK apps (firefox, etc..)
+exec_always {
+    gsettings set org.gnome.desktop.interface font-name 'Roboto 11'
+}
+
+# disable dragging windows (really annoying in tabbed/stacked layout)
+tiling_drag disable
+
+# notification daemon
+exec mako
+
+# idle locker
+exec swayidle -w timeout 300 "swaylock -ef -c 000000" timeout 600 "swaymsg 'output * power off'" resume "swaymsg 'output * power on'"
+
+# manual screen lock
+bindsym Super+Alt+l exec swaylock -ef -c 000000
+
+# screenshots with grim and slurp
+bindsym Super+Shift+F10 exec --no-startup-id grim -g "$(slurp -d)" - | tee /media/Ext1TB/screenies/swaywm/$(date \'+%d-%m-%Y--%R:%S\').png | wl-copy -t image/png
+
+# start kitty
+bindsym Super+Return exec --no-startup-id kitty
+
+# start dolphin
+bindsym Super+Backspace exec --no-startup-id dolphin
+
+# start fuzzel (program launcher)
+bindsym Super+d exec --no-startup-id fuzzel
+
+# bind 'sp' commands to keyboard keys (sp is an external script that utilizes the MPRIS dbus protocol to send commands to the running spotify client
+# sp is in $HOME/.scripts, which should be in $PATH
+bindsym Super+F7 exec --no-startup-id sp play && pkill -SIGRTMIN+6 i3blocks
+bindsym Super+F6 exec --no-startup-id sp prev && pkill -SIGRTMIN+6 i3blocks
+bindsym Super+F8 exec --no-startup-id sp next && pkill -SIGRTMIN+6 i3blocks
+
+# Font for window titles. Will also be used by the bar unless a different font
+font pango:Roboto Mono, medium 10
+
+# color configuration - tokyonight theme
+# these values would ideally be defined as reusable variables
+# class                 border  backgr. text    indicator child_border
+client.focused          #c574dd #222436 #a9b8e8 #c574dd   #c574dd
+client.focused_inactive #252734 #252734 #a9b8e8 #252734   #252734
+client.unfocused        #4d4d4d #252734 #888888 #252734   #252734
+client.urgent           #2f343a #900000 #a9b8e8 #900000   #900000
+client.placeholder      #000000 #0c0c0c #a9b8e8 #000000   #0c0c0c
+client.background       #1a1b26
+
+# border configuration
+# TODO: rebind this to a more obscure combination?
+
+# bindsym Super+Shift+b border toggle
+
+# hide the borders if there's only 1 window on a workspace visible AND it has no gaps (want the border when gaps are visible for aesthetic reasons)
+hide_edge_borders smart_no_gaps
+
+default_border pixel 3
+default_floating_border pixel 3
+
+# Use Mouse+Super to drag floating windows to their wanted position
+floating_modifier Super
+
+# kill focused container / window
+bindsym Super+Shift+q kill
+
+# change currently focused container in specified direction
+bindsym Super+h focus left
+bindsym Super+j focus down
+bindsym Super+k focus up
+bindsym Super+l focus right
+
+# change currently focused output (monitor) in specified direction
+bindsym Super+Ctrl+h focus output left
+bindsym Super+Ctrl+l focus output right
+bindsym Super+Ctrl+j focus output down
+bindsym Super+Ctrl+k focus output up
+
+# move focused container
+bindsym Super+Shift+h move left
+bindsym Super+Shift+j move down
+bindsym Super+Shift+k move up
+bindsym Super+Shift+l move right
+
+# split the currently focused container
+bindsym Super+v split vertical
+bindsym Super+o split horizontal
+
+# enter fullscreen mode for the focused container
+bindsym Super+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym Super+s layout stacking
+bindsym Super+w layout tabbed
+bindsym Super+e layout toggle split
+
+bindsym Super+shift+c split none
+
+# toggle tiling / floating
+bindsym Super+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym Super+space focus mode_toggle
+
+# focus the parent container
+bindsym Super+a focus parent
+
+# focus the child container
+bindsym Super+Shift+d focus child
+
+# Define names for default workspaces for which we configure key bindings later on.
+set $ws1 number "1:main"
+set $ws2 number "2"
+set $ws3 number "3"
+set $ws4 number "4"
+set $ws5 number "5"
+set $ws6 number "6"
+set $ws7 number "7"
+set $ws8 number "8"
+set $ws9 number "9"
+set $ws10 number "0"
+
+# switch to specific workspace
+bindsym Super+1 workspace $ws1
+bindsym Super+2 workspace $ws2
+bindsym Super+3 workspace $ws3
+bindsym Super+4 workspace $ws4
+bindsym Super+5 workspace $ws5
+bindsym Super+6 workspace $ws6
+bindsym Super+7 workspace $ws7
+bindsym Super+8 workspace $ws8
+bindsym Super+9 workspace $ws9
+bindsym Super+0 workspace $ws10
+
+# switch to workspace left/right on current output
+bindsym Super+n workspace prev_on_output
+bindsym Super+m workspace next_on_output
+
+bindsym Super+tab workspace back_and_forth
+
+# move focused container to specific workspace
+bindsym Super+Shift+1 move container to workspace $ws1
+bindsym Super+Shift+2 move container to workspace $ws2
+bindsym Super+Shift+3 move container to workspace $ws3
+bindsym Super+Shift+4 move container to workspace $ws4
+bindsym Super+Shift+5 move container to workspace $ws5
+bindsym Super+Shift+6 move container to workspace $ws6
+bindsym Super+Shift+7 move container to workspace $ws7
+bindsym Super+Shift+8 move container to workspace $ws8
+bindsym Super+Shift+9 move container to workspace $ws9
+bindsym Super+Shift+0 move container to workspace $ws10
+
+bindsym Super+Shift+r reload
+
+mode "resize" {
+    bindsym h resize shrink width 2 ppt
+    bindsym k resize grow height 2 ppt
+    bindsym j resize shrink height 2 ppt
+    bindsym l resize grow width 2 ppt
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym Super+r mode "default"
+}
+
+mode "gaps" {
+    # the be-all end-all mode for configuring gaps on the fly
+    # I keep any and all gaps off by default
+
+    # h, l - modify outer gaps on current workspace
+    bindsym h gaps outer current minus 5
+    bindsym l gaps outer current plus 5
+    # j, k - modify inner gaps on current workspace
+    bindsym j gaps inner current minus 5
+    bindsym k gaps inner current plus 5
+    # Shift+h,l - modify outer gaps on all workspaces
+    bindsym Shift+h gaps outer all minus 5
+    bindsym Shift+l gaps outer all plus 5
+    # Shift+j,k modify inner gaps on all workspaces
+    bindsym Shift+j gaps inner all minus 5
+    bindsym Shift+k gaps inner all plus 5
+
+    # 0       - unset both inner and outer gaps on the current workspace
+    # Shift-0 - unset both innder and outer gaps on all workspaces
+    bindsym 0 gaps outer current set 0; gaps inner current set 0
+    bindsym Shift+0 gaps outer all set 0 ; gaps inner all set 0
+
+    # n - unset outer gaps on current workspace
+    # m - unset inner gaps on current workspace
+    bindsym n gaps outer current set 0
+    bindsym m gaps inner current set 0
+
+    # Shift-n - unset inner gaps on all workspaces
+    # Shift-m - unset outer gaps on all workspaces
+    bindsym Shift+n gaps inner all set 0
+    bindsym Shift+m gaps outer all set 0
+
+    # quit current mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym Super+g mode "default"
+}
+
+bindsym Super+g mode "gaps"
+bindsym Super+r mode "resize"
+
+bar {
+    status_command i3blocks
+    position top
+    height 25
+    separator_symbol "  |  "
+
+    colors {
+        background #1f2335
+        separator  #565f89
+        statusline #c0caf5
+
+        # State             Border  BG      Text
+        focused_workspace   #7aa2f7 #3d59a1 #c0caf5
+        inactive_workspace  #3b4261 #1f2335 #565f89
+        binding_mode        #7aa2f7 #3d59a1 #c0caf5
+        #active_workspace    $base05 #000000 $base00 # ONLY makes sense when multiple monitors are present
+        #urgent_workspace    $base08 $base08 $base00 # no application utilizes urgent notifications on Wayland lol so this is kinda useless
+    }
+
+    #disable up/down scroll on the bar (don't switch workspaces...) 
+    bindsym button4 nop
+    bindsym button5 nop
+}

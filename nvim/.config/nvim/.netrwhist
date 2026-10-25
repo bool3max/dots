@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =4
+let g:netrw_dirhist_4='/home/bogdan/.scripts/blocks'
+let g:netrw_dirhist_3='/home/bogdan/.scripts'
+let g:netrw_dirhist_2='/home/bogdan/.binwalk/config'
+let g:netrw_dirhist_1='/home/bogdan/.binwalk'
+let g:netrw_dirhist_0='/home/bogdan'
+let g:netrw_dirhist_9='/home/bogdan/.cmake/packages/LibObs'
+let g:netrw_dirhist_8='/home/bogdan/.cmake/packages'
+let g:netrw_dirhist_7='/home/bogdan/.cmake'
+let g:netrw_dirhist_6='/home/bogdan'
+let g:netrw_dirhist_5='/home/bogdan/.local/share/nvim/plugged'
