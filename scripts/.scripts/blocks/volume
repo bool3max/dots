@@ -1,4 +1,0 @@
-#!/usr/bin/fish
-
-set vol (pamixer --get-volume)
-echo -e " $vol%"

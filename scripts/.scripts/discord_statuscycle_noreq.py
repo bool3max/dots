@@ -1,1 +1,0 @@
-/home/bogdan/dev/discord_rotating_status/cycler.py
